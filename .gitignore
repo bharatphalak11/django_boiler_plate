@@ -1,0 +1,8 @@
+.venv
+.db
+.env
+__pycache__
+.idea
+media
+static
+app/config.ini
