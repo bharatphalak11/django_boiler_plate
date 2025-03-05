@@ -12,15 +12,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from datetime import timedelta
-from configparser import ConfigParser
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load the config.ini file
-config = ConfigParser()
-config.read(os.path.join(os.path.dirname(__file__), 'config.ini'))
+# Load environment variables from .env file
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -29,22 +28,22 @@ config.read(os.path.join(os.path.dirname(__file__), 'config.ini'))
 SECRET_KEY = 'django-insecure-*3qi-)ap*5-be99rh$)#14b+y=&n_+#ks&=*4ilk$j3la7mfs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config.getboolean(section='main', option='DEBUG')
+DEBUG = os.environ["DEBUG"]
 
-WEB_HOST = config.get(section='main', option='WEB_HOST')
-SERVER_HOST = config.get(section='main', option='SERVER_HOST')
+WEB_HOST = os.environ["WEB_HOST"]
+SERVER_HOST = os.environ["SERVER_HOST"]
 
-EMAIL_HOST = config.get(section='email', option='HOST')
-EMAIL_PORT = config.get(section='email', option='PORT')
-EMAIL_HOST_USER =  config.get(section='email', option='USER')
-EMAIL_HOST_PASSWORD = config.get(section='email', option='PASSWORD')
-EMAIL_FROM = config.get(section='email', option='EMAIL_FROM')
+EMAIL_HOST = os.environ["EMAIL_HOST"]
+EMAIL_PORT = os.environ["EMAIL_PORT"]
+EMAIL_HOST_USER =  os.environ["EMAIL_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_PASSWORD"]
+EMAIL_FROM = os.environ["EMAIL_FROM"]
 
-USE_S3 = config.getboolean(section='bucket', option='USE_S3')
-AWS_ACCESS_KEY_ID = config.get(section='bucket', option='AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config.get(section='bucket', option='AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config.get(section='bucket', option='AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = config.get(section='bucket', option='AWS_S3_REGION_NAME')
+USE_S3 = os.environ["AWS_BUCKET_USE_S3"]
+AWS_ACCESS_KEY_ID = os.environ["AWS_BUCKET_ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = os.environ["AWS_BUCKET_SECRET_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = os.environ["AWS_BUCKET_STORAGE_BUCKET_NAME"]
+AWS_S3_REGION_NAME = os.environ["AWS_BUCKET_S3_REGION_NAME"]
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
 
 ALLOWED_HOSTS = ['*']
@@ -157,11 +156,11 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config.get(section='database', option='NAME'),
-        'USER': config.get(section='database', option='USER'),
-        'PASSWORD': config.get(section='database', option='PASSWORD'),
-        'HOST': config.get(section='database', option='HOST'),
-        'PORT': config.get(section='database', option='PORT')
+        'NAME': os.environ["DATABASE_NAME"],
+        'USER': os.environ["DATABASE_USER"],
+        'PASSWORD': os.environ["DATABASE_PASSWORD"],
+        'HOST': os.environ["DATABASE_HOST"],
+        'PORT':os.environ["DATABASE_PORT"]
     }
 }
 
