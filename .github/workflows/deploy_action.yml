@@ -59,16 +59,16 @@ jobs:
           docker push ${{ secrets.DOCKER_REPOSITORY }}:$GIT_COMMIT
           docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
 
-    deploy:
-      needs: docker
-      runs-on: ubuntu-latest
+  deploy:
+    needs: docker
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Deploy to VM
-          uses: appleboy/ssh-action@v1.2.1
-          with:
-            host: ${{ secrets.VM_HOST }}
-            username: ${{ secrets.VM_USER }}
-            key: ${{ secrets.SSH_PRIVATE_KEY }}
-            script: |
-              ./deploy.sh
+    steps:
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@v1.2.1
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            ./deploy.sh
