@@ -50,7 +50,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build and Push Docker Image
-        if: github.ref == 'refs/heads/master'
+#        if: github.ref == 'refs/heads/master'
         run: |
           GIT_COMMIT=$(git rev-parse --short HEAD)
           echo "commit: $GIT_COMMIT"
