@@ -55,6 +55,6 @@ jobs:
           GIT_COMMIT=$(git rev-parse --short HEAD)
           echo "commit: $GIT_COMMIT"
           echo "REPO: ${{ secrets.DOCKER_REPOSITORY }}"
-          docker build -t ${{ secrets.DOCKER_REPOSITORY }}:$GIT_COMMIT .
+          docker build -t ${{ secrets.DOCKER_REPOSITORY }}:$GIT_COMMIT -t ${{ secrets.DOCKER_REPOSITORY }}:latest .
           docker push ${{ secrets.DOCKER_REPOSITORY }}:$GIT_COMMIT
           docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
